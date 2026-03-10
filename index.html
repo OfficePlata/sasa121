@@ -14,7 +14,7 @@
       --accent: #2563eb;
       --accent-soft: #eff6ff;
       --danger: #ef4444;
-      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
       --radius: 12px;
     }
 
@@ -33,22 +33,38 @@
       padding: 20px;
     }
 
-    /* Toolbar */
+    /* 管理者のみ表示されるツールバー */
     .toolbar {
+      display: none; /* デフォルト非表示 */
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(248, 250, 252, 0.8);
+      background: rgba(248, 250, 252, 0.9);
       backdrop-filter: blur(8px);
       padding: 10px 0;
       margin-bottom: 20px;
-      border-bottom: 1px solid var(--line);
+      border-bottom: 2px solid var(--accent);
+    }
+
+    body.is-admin .toolbar {
+      display: block; /* 管理者URLの場合のみ表示 */
     }
 
     .toolbar-inner {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
+      align-items: center;
+    }
+
+    .admin-badge {
+      background: var(--accent);
+      color: white;
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: bold;
+      margin-right: 10px;
     }
 
     button {
@@ -63,7 +79,7 @@
       color: #fff;
     }
 
-    button:hover { opacity: 0.9; transform: translateY(-1px); }
+    button:hover { opacity: 0.9; }
     button.secondary {
       background: #fff;
       color: var(--text);
@@ -151,10 +167,18 @@
       padding: 2px 4px;
       border-radius: 4px;
       transition: background 0.2s;
+      min-height: 1.2em;
     }
 
-    .edit-mode .editable:hover { background: #f1f5f9; cursor: text; }
-    .edit-mode .editable:focus { background: #fff; outline: 2px solid var(--accent); }
+    /* 編集モード時のスタイル */
+    .edit-active .editable {
+      cursor: text;
+      background: #f1f5f9;
+    }
+    .edit-active .editable:focus {
+      background: #fff;
+      outline: 2px solid var(--accent);
+    }
 
     .list-item-container {
       display: flex;
@@ -169,7 +193,7 @@
       cursor: pointer;
       padding: 2px 6px;
     }
-    .edit-mode .btn-del { display: inline-block; }
+    .edit-active .btn-del { display: inline-block; }
 
     .btn-add {
       display: none;
@@ -182,7 +206,7 @@
       font-size: 12px;
       border-radius: 4px;
     }
-    .edit-mode .btn-add { display: block; }
+    .edit-active .btn-add { display: block; }
 
     /* Timeline */
     .timeline { border-left: 2px solid var(--line); margin-left: 10px; padding-left: 20px; }
@@ -211,7 +235,7 @@
     .json-box.show { display: block; }
     textarea {
       width: 100%;
-      height: 300px;
+      height: 200px;
       background: transparent;
       color: inherit;
       border: 1px solid #475569;
@@ -233,16 +257,17 @@
     }
   </style>
 </head>
-<body class="edit-mode">
+<body>
 
   <div class="wrap">
     <div class="toolbar">
       <div class="toolbar-inner">
-        <button id="toggleBtn" onclick="toggleEditMode()">編集モードをOFFにする</button>
-        <button class="secondary" onclick="toggleJson()">JSON表示</button>
-        <button class="secondary" onclick="exportJson()">JSON書き出し</button>
-        <button class="secondary" onclick="window.print()">印刷 / PDF保存</button>
-        <button class="secondary" onclick="resetData()">リセット</button>
+        <span class="admin-badge">ADMIN MODE</span>
+        <button id="toggleBtn" onclick="toggleEditMode()">編集を開始する</button>
+        <button class="secondary" onclick="copyShareLink()">相手用リンクをコピー</button>
+        <button class="secondary" onclick="toggleJson()">JSON</button>
+        <button class="secondary" onclick="exportJson()">JSON出力</button>
+        <button class="secondary" onclick="window.print()">印刷/PDF</button>
       </div>
     </div>
 
@@ -251,20 +276,19 @@
       <div class="hero-grid">
         <div class="avatar" data-key="profile.initial">笹</div>
         <div class="hero-info">
-          <h1 class="editable" contenteditable="true" data-key="profile.name">笹原 彰朗</h1>
-          <p class="editable" contenteditable="true" data-key="profile.tagline">お金とスマホの「やってみたい！」を叶える、地域密着のデジタル伴走者</p>
+          <h1 class="editable" data-key="profile.name">笹原 彰朗</h1>
+          <p class="editable" data-key="profile.tagline">お金とスマホの「やってみたい！」を叶える、地域密着のデジタル伴走者</p>
           <div class="meta-list">
-            <span class="pill editable" contenteditable="true" data-key="profile.company">OFFICE PLATA / ささエール</span>
-            <span class="pill editable" contenteditable="true" data-key="profile.role">LINEコンサルタント / DX支援</span>
-            <span class="pill editable" contenteditable="true" data-key="profile.area">鹿児島・宮崎中心</span>
-            <span class="pill editable" contenteditable="true" data-key="profile.chapter">BNI：Big Forests Chapter</span>
+            <span class="pill editable" data-key="profile.company">OFFICE PLATA / ささエール</span>
+            <span class="pill editable" data-key="profile.role">LINEコンサルタント / DX支援</span>
+            <span class="pill editable" data-key="profile.area">鹿児島・宮崎中心</span>
+            <span class="pill editable" data-key="profile.chapter">BNI：Big Forests Chapter</span>
           </div>
         </div>
       </div>
     </header>
 
     <div class="main-grid">
-      <!-- GAINS Section -->
       <section class="card">
         <span class="section-tag">GAINS</span>
         <h2>Goals（目標）</h2>
@@ -313,7 +337,7 @@
       <section class="card full-width">
         <span class="section-tag">Message</span>
         <h2>私の想い</h2>
-        <div class="editable" contenteditable="true" data-key="bio.mission" style="font-size: 15px; color: var(--sub);"></div>
+        <div class="editable" data-key="bio.mission" style="font-size: 15px; color: var(--sub);"></div>
       </section>
 
       <section class="card">
@@ -362,18 +386,20 @@
       </section>
     </div>
 
-    <!-- JSON Input/Output -->
     <div id="jsonBox" class="json-box">
-      <h3>データ (JSON)</h3>
-      <p style="font-size: 11px; margin-bottom: 10px; opacity: 0.8;">このテキストを保存しておけば、次回貼り付けるだけで復元できます。</p>
+      <h3>データ管理</h3>
       <textarea id="jsonArea"></textarea>
       <div style="margin-top:10px;">
-        <button onclick="applyJson()">JSONを反映して更新</button>
+        <button onclick="applyJson()">JSON反映</button>
+        <button class="secondary" onclick="resetData()">リセット</button>
       </div>
     </div>
   </div>
 
   <script>
+    // 管理者アクセスのための秘密キー
+    const ADMIN_KEY = "sasa121";
+
     const defaultData = {
       profile: {
         initial: "笹",
@@ -385,11 +411,11 @@
         chapter: "BNI：Big Forests Chapter"
       },
       gains: {
-        goals: ["地域の中小企業のDX支援","1年以内に30社の導入を目指す","継続支援型の事業モデル構築"],
-        accomplishments: ["LINE公式アカウント運用支援多数","AI自動化ツールの導入提案","地域密着のIT相談"],
-        interests: ["DX支援","LINE/Lステップ","AI効率化","家族との時間"],
+        goals: ["地域の中小企業のDX支援","1年以内に30社の導入を目指す"],
+        accomplishments: ["LINE公式アカウント運用支援多数","AI自動化ツールの導入提案"],
+        interests: ["DX支援","LINE/Lステップ","AI効率化"],
         networks: ["鹿児島・宮崎の経営者","商工会関係者"],
-        skills: ["LINE構築","Lステップ設計","AI自動化提案"],
+        skills: ["LINE構築","Lステップ設計"],
         referrals: ["LINEを始めたい経営者","問い合わせ対応に困っている店舗"]
       },
       bio: {
@@ -403,13 +429,24 @@
       },
       meeting: {
         iWantToShare: ["私のサポート内容","紹介のタイミング"],
-        iWantToAsk: ["最近の経営課題は？","周りに困っている人はいませんか？"],
-        referralTriggers: ["『LINEが活用できていない』と言われた時","『人手が足りない』と聞いた時"]
+        iWantToAsk: ["最近の経営課題は？"],
+        referralTriggers: ["『LINEが活用できていない』と言われた時"]
       }
     };
 
     let appData = JSON.parse(JSON.stringify(defaultData));
-    let isEditMode = true;
+    let isEditActive = false;
+    let isAdmin = false;
+
+    // --- Auth Check ---
+    function checkAuth() {
+      const params = new URLSearchParams(window.location.search);
+      // URLに ?admin=sasa121 が含まれているかチェック
+      if (params.get('admin') === ADMIN_KEY) {
+        isAdmin = true;
+        document.body.classList.add('is-admin');
+      }
+    }
 
     // --- Core Functions ---
 
@@ -425,11 +462,13 @@
     }
 
     function renderAll() {
-      // 1. Render Text Fields
       document.querySelectorAll('[data-key]').forEach(el => {
         const path = el.getAttribute('data-key');
         const val = getDataByPath(path);
         
+        // 編集可否の設定
+        el.contentEditable = isEditActive ? "true" : "false";
+
         if (el.tagName === 'UL') {
           renderList(el, val, path);
         } else if (path === 'profile.initial') {
@@ -439,10 +478,7 @@
         }
       });
 
-      // 2. Render Timeline
       renderTimeline();
-
-      // 3. Update JSON Area
       document.getElementById('jsonArea').value = JSON.stringify(appData, null, 2);
     }
 
@@ -453,7 +489,7 @@
         const li = document.createElement('li');
         li.innerHTML = `
           <div class="list-item-container">
-            <span class="editable" contenteditable="${isEditMode}" oninput="updateListData('${path}', ${idx}, this.textContent)">${text}</span>
+            <span class="editable" contenteditable="${isEditActive}" oninput="updateListData('${path}', ${idx}, this.textContent)">${text}</span>
             <span class="btn-del" onclick="removeItem('${path}', ${idx})">✕</span>
           </div>
         `;
@@ -468,8 +504,8 @@
         const div = document.createElement('div');
         div.className = "time-item";
         div.innerHTML = `
-          <div class="time-year editable" contenteditable="${isEditMode}" oninput="updateTimelineData(${idx}, 'year', this.textContent)">${item.year}</div>
-          <div class="editable" contenteditable="${isEditMode}" oninput="updateTimelineData(${idx}, 'text', this.textContent)">${item.text}</div>
+          <div class="time-year editable" contenteditable="${isEditActive}" oninput="updateTimelineData(${idx}, 'year', this.textContent)">${item.year}</div>
+          <div class="editable" contenteditable="${isEditActive}" oninput="updateTimelineData(${idx}, 'text', this.textContent)">${item.text}</div>
           <span class="btn-del" onclick="removeTimelineItem(${idx})" style="position:absolute; right:0; top:0;">✕</span>
         `;
         container.appendChild(div);
@@ -477,8 +513,6 @@
     }
 
     // --- Update Functions ---
-
-    // 直接テキストを編集した時の同期
     document.addEventListener('input', (e) => {
       const path = e.target.getAttribute('data-key');
       if (path && !e.target.closest('ul') && !e.target.closest('#timeline')) {
@@ -505,71 +539,69 @@
       document.getElementById('jsonArea').value = JSON.stringify(appData, null, 2);
     }
 
-    // --- Action Functions ---
-
+    // --- Actions ---
     function addItem(path) {
-      const list = getDataByPath(path);
-      list.push("新しい項目");
+      getDataByPath(path).push("新しい項目");
       renderAll();
     }
-
     function removeItem(path, idx) {
-      const list = getDataByPath(path);
-      list.splice(idx, 1);
+      getDataByPath(path).splice(idx, 1);
       renderAll();
     }
-
     function addTimelineItem() {
       appData.bio.timeline.push({ year: "20XX年", text: "新しい出来事" });
       renderAll();
     }
-
     function removeTimelineItem(idx) {
       appData.bio.timeline.splice(idx, 1);
       renderAll();
     }
 
     function toggleEditMode() {
-      isEditMode = !isEditMode;
-      document.body.classList.toggle('edit-mode', isEditMode);
-      document.getElementById('toggleBtn').textContent = isEditMode ? "編集モードをOFFにする" : "編集モードをONにする";
+      isEditActive = !isEditActive;
+      document.body.classList.toggle('edit-active', isEditActive);
+      document.getElementById('toggleBtn').textContent = isEditActive ? "編集を終了する" : "編集を開始する";
+      document.getElementById('toggleBtn').style.background = isEditActive ? "var(--danger)" : "var(--accent)";
       renderAll();
     }
 
-    function toggleJson() {
-      document.getElementById('jsonBox').classList.toggle('show');
+    function copyShareLink() {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('admin'); // 管理者用パラメータを削除
+      const shareUrl = url.toString();
+      
+      const el = document.createElement('textarea');
+      el.value = shareUrl;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+      alert("相手用の閲覧リンクをコピーしました！");
     }
 
+    function toggleJson() { document.getElementById('jsonBox').classList.toggle('show'); }
     function applyJson() {
       try {
-        const newData = JSON.parse(document.getElementById('jsonArea').value);
-        appData = newData;
+        appData = JSON.parse(document.getElementById('jsonArea').value);
         renderAll();
-        alert("データを反映しました。");
-      } catch (e) {
-        alert("JSONの形式が正しくありません。");
-      }
+        alert("反映完了");
+      } catch (e) { alert("JSONエラー"); }
     }
-
     function exportJson() {
       const blob = new Blob([JSON.stringify(appData, null, 2)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
-      a.href = url;
-      a.download = `BNI_1to1_${appData.profile.name || 'data'}.json`;
+      a.href = URL.createObjectURL(blob);
+      a.download = `1to1_${appData.profile.name}.json`;
       a.click();
-      URL.revokeObjectURL(url);
     }
-
     function resetData() {
-      if(confirm("入力をすべてリセットしてサンプルデータに戻しますか？")) {
-        appData = JSON.parse(JSON.stringify(defaultData));
-        renderAll();
-      }
+      if(confirm("リセットしますか？")) { appData = JSON.parse(JSON.stringify(defaultData)); renderAll(); }
     }
 
-    // Init
-    window.onload = renderAll;
+    window.onload = () => {
+      checkAuth();
+      renderAll();
+    };
   </script>
 </body>
 </html>
