@@ -70,6 +70,7 @@
     }
 
     .avatar {
+      position: relative;
       width: 116px; height: 116px;
       border-radius: 50%;
       background: rgba(255,255,255,0.18);
@@ -78,6 +79,23 @@
       border: 3px solid rgba(255,255,255,0.5);
       flex-shrink: 0;
       letter-spacing: 0.05em;
+      overflow: hidden;
+    }
+    .avatar img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    /* Hero logo (top right) */
+    .hero-logo {
+      position: absolute;
+      top: 20px; right: 24px;
+      z-index: 2;
+      max-height: 48px;
+      max-width: 160px;
+      opacity: 0.95;
     }
 
     .hero-info h1 {
@@ -176,6 +194,61 @@
     .lead {
       font-size: 16px;
       color: var(--text);
+    }
+
+    /* Image placeholder slots (差し替えやすい枠) */
+    .img-slot {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #f1f5f9;
+      border: 2px dashed #cbd5e1;
+      transition: border 0.2s;
+    }
+    .img-slot.round { border-radius: 50%; aspect-ratio: 1 / 1; }
+    .img-slot img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .img-slot.has-image { border: 1px solid var(--line); background: transparent; }
+    .img-slot.has-image .img-placeholder { display: none; }
+    .img-placeholder {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      color: #94a3b8;
+      font-size: 12px;
+      gap: 6px;
+      padding: 10px;
+      text-align: center;
+    }
+    .ph-icon { font-size: 28px; opacity: 0.7; }
+    .ph-name {
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 11px;
+      background: #fff;
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid #e2e8f0;
+      color: #64748b;
+    }
+    .ph-hint { font-size: 11px; opacity: 0.8; }
+
+    /* Gallery */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .gallery-item .caption {
+      margin-top: 8px;
+      font-size: 13px;
+      color: var(--sub);
+      text-align: center;
     }
 
     /* Service cards */
@@ -310,8 +383,10 @@
       .meta-list { justify-content: center; }
       .service-list { grid-template-columns: 1fr; }
       .contact-list { grid-template-columns: 1fr; }
+      .gallery { grid-template-columns: repeat(2, 1fr); }
       .hero { padding: 32px 22px; }
       .hero-info h1 { font-size: 26px; }
+      .hero-logo { top: 12px; right: 12px; max-height: 36px; max-width: 110px; }
     }
 
     @media print {
@@ -326,8 +401,19 @@
 
     <!-- HERO -->
     <header class="hero">
+      <!-- 屋号ロゴ差し替え枠: images/logo.png に画像を置くと表示されます -->
+      <img class="hero-logo" src="images/logo.png" alt="OFFICE PLATA / ささエール"
+           onload="this.style.opacity='1'"
+           onerror="this.style.display='none'">
+
       <div class="hero-grid">
-        <div class="avatar">笹</div>
+        <!-- プロフィール写真差し替え枠: images/profile.jpg を置くと「笹」の代わりに表示されます -->
+        <div class="avatar">
+          <span>笹</span>
+          <img src="images/profile.jpg" alt="笹原 彰朗"
+               onload="this.parentElement.classList.add('has-image')"
+               onerror="this.style.display='none'">
+        </div>
         <div class="hero-info">
           <div class="reading">SASAHARA AKIRO</div>
           <h1>笹原 彰朗</h1>
@@ -462,6 +548,96 @@
         <div class="time-item">
           <div class="time-year">現在</div>
           <div class="time-text">LINE × AI活用支援を主軸に、地域DXパートナーとして活動。BNI Big Forests Chapter にて地域経営者と共に成長中。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="card full">
+      <span class="tag">GALLERY</span>
+      <h2>活動の様子・実績</h2>
+      <p style="color: var(--sub); font-size: 13px; margin-bottom: 16px;">
+        セミナー登壇・お客様の声・施工事例などの写真を差し込めます。
+        <code style="background:#f1f5f9; padding:2px 6px; border-radius:4px;">images/gallery-1.jpg</code> 〜 <code style="background:#f1f5f9; padding:2px 6px; border-radius:4px;">images/gallery-6.jpg</code> を置くと自動表示。
+      </p>
+      <div class="gallery">
+        <div class="gallery-item">
+          <div class="img-slot">
+            <img src="images/gallery-1.jpg" alt=""
+                 onload="this.parentElement.classList.add('has-image')"
+                 onerror="this.style.display='none'">
+            <div class="img-placeholder">
+              <span class="ph-icon">📷</span>
+              <span class="ph-name">images/gallery-1.jpg</span>
+              <span class="ph-hint">セミナー登壇</span>
+            </div>
+          </div>
+          <div class="caption">セミナー登壇</div>
+        </div>
+        <div class="gallery-item">
+          <div class="img-slot">
+            <img src="images/gallery-2.jpg" alt=""
+                 onload="this.parentElement.classList.add('has-image')"
+                 onerror="this.style.display='none'">
+            <div class="img-placeholder">
+              <span class="ph-icon">📷</span>
+              <span class="ph-name">images/gallery-2.jpg</span>
+              <span class="ph-hint">お客様サポート</span>
+            </div>
+          </div>
+          <div class="caption">お客様サポート</div>
+        </div>
+        <div class="gallery-item">
+          <div class="img-slot">
+            <img src="images/gallery-3.jpg" alt=""
+                 onload="this.parentElement.classList.add('has-image')"
+                 onerror="this.style.display='none'">
+            <div class="img-placeholder">
+              <span class="ph-icon">📷</span>
+              <span class="ph-name">images/gallery-3.jpg</span>
+              <span class="ph-hint">LINE構築事例</span>
+            </div>
+          </div>
+          <div class="caption">LINE構築事例</div>
+        </div>
+        <div class="gallery-item">
+          <div class="img-slot">
+            <img src="images/gallery-4.jpg" alt=""
+                 onload="this.parentElement.classList.add('has-image')"
+                 onerror="this.style.display='none'">
+            <div class="img-placeholder">
+              <span class="ph-icon">📷</span>
+              <span class="ph-name">images/gallery-4.jpg</span>
+              <span class="ph-hint">スマホレッスン</span>
+            </div>
+          </div>
+          <div class="caption">スマホレッスン</div>
+        </div>
+        <div class="gallery-item">
+          <div class="img-slot">
+            <img src="images/gallery-5.jpg" alt=""
+                 onload="this.parentElement.classList.add('has-image')"
+                 onerror="this.style.display='none'">
+            <div class="img-placeholder">
+              <span class="ph-icon">📷</span>
+              <span class="ph-name">images/gallery-5.jpg</span>
+              <span class="ph-hint">商工会・団体活動</span>
+            </div>
+          </div>
+          <div class="caption">商工会・団体活動</div>
+        </div>
+        <div class="gallery-item">
+          <div class="img-slot">
+            <img src="images/gallery-6.jpg" alt=""
+                 onload="this.parentElement.classList.add('has-image')"
+                 onerror="this.style.display='none'">
+            <div class="img-placeholder">
+              <span class="ph-icon">📷</span>
+              <span class="ph-name">images/gallery-6.jpg</span>
+              <span class="ph-hint">BNI チャプター</span>
+            </div>
+          </div>
+          <div class="caption">BNI チャプター</div>
         </div>
       </div>
     </section>
