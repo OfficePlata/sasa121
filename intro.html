@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>笹原 彰朗 ｜ BNI 自己紹介 - OFFICE PLATA / ささエール</title>
+  <meta name="description" content="お金とスマホの「やってみたい！」を叶える、地域密着のデジタル伴走者。LINE構築・Lステップ設計・AI活用で鹿児島・宮崎の中小企業をサポート。" />
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --line: #e2e8f0;
+      --text: #1e293b;
+      --sub: #64748b;
+      --accent: #2563eb;
+      --accent-2: #06b6d4;
+      --accent-soft: #eff6ff;
+      --warn: #f59e0b;
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.08);
+      --shadow-lg: 0 20px 40px -20px rgb(30 64 175 / 0.35);
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 24px 20px 60px;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      background:
+        radial-gradient(1200px 400px at 10% 0%, rgba(255,255,255,0.18), transparent 60%),
+        linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #06b6d4 100%);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 40px 36px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -80px; top: -80px;
+      width: 280px; height: 280px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50%;
+      filter: blur(2px);
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .avatar {
+      width: 116px; height: 116px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 44px; font-weight: 800;
+      border: 3px solid rgba(255,255,255,0.5);
+      flex-shrink: 0;
+      letter-spacing: 0.05em;
+    }
+
+    .hero-info h1 {
+      margin: 0 0 4px;
+      font-size: 32px;
+      letter-spacing: 0.04em;
+      font-weight: 800;
+    }
+    .hero-info .reading {
+      font-size: 13px;
+      opacity: 0.85;
+      letter-spacing: 0.18em;
+      margin-bottom: 10px;
+    }
+    .hero-info .tagline {
+      margin: 0 0 18px;
+      font-size: 16px;
+      opacity: 0.95;
+      font-weight: 500;
+    }
+    .meta-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill {
+      background: rgba(255,255,255,0.15);
+      padding: 5px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      border: 1px solid rgba(255,255,255,0.28);
+      backdrop-filter: blur(4px);
+    }
+
+    /* Memory hook */
+    .hook {
+      margin-top: 22px;
+      padding: 16px 20px;
+      background: rgba(255,255,255,0.13);
+      border-left: 4px solid #fde68a;
+      border-radius: 8px;
+      font-size: 15px;
+      position: relative; z-index: 1;
+    }
+    .hook .hook-label {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      background: #fde68a;
+      color: #78350f;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    /* Sections */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 26px;
+      box-shadow: var(--shadow);
+    }
+    .full { grid-column: 1 / -1; }
+
+    .tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 0.14em;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    h2 {
+      margin: 0 0 16px;
+      font-size: 19px;
+      border-left: 4px solid var(--accent);
+      padding-left: 12px;
+      letter-spacing: 0.02em;
+    }
+    h3 {
+      margin: 0 0 10px;
+      font-size: 14px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    p { margin: 0 0 12px; }
+    ul { padding-left: 20px; margin: 0; }
+    li { margin-bottom: 8px; }
+
+    .lead {
+      font-size: 16px;
+      color: var(--text);
+    }
+
+    /* Service cards */
+    .service-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      list-style: none;
+      padding: 0;
+    }
+    .service {
+      background: var(--accent-soft);
+      border: 1px solid #dbeafe;
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .service-icon {
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+    .service-title {
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+    .service-desc {
+      font-size: 13px;
+      color: var(--sub);
+      line-height: 1.55;
+    }
+
+    /* Referral box */
+    .referral {
+      background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%);
+      border: 1px solid #fde68a;
+      border-radius: var(--radius);
+      padding: 24px 26px;
+    }
+    .referral h2 {
+      border-left-color: var(--warn);
+      color: #78350f;
+    }
+    .referral .tag { color: var(--warn); }
+    .referral ul li { font-weight: 500; }
+    .referral .hint {
+      margin-top: 14px;
+      padding: 10px 14px;
+      background: rgba(255,255,255,0.7);
+      border-radius: 8px;
+      font-size: 13px;
+      color: #92400e;
+    }
+
+    /* Timeline */
+    .timeline { border-left: 2px solid var(--line); margin-left: 10px; padding-left: 22px; margin-top: 8px; }
+    .time-item { position: relative; margin-bottom: 18px; }
+    .time-item:last-child { margin-bottom: 0; }
+    .time-item::before {
+      content: "";
+      position: absolute;
+      left: -29px; top: 7px;
+      width: 12px; height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+    .time-year {
+      font-weight: 700; font-size: 13px; color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+    .time-text { font-size: 14px; color: var(--text); }
+
+    /* Contact */
+    .contact-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      list-style: none;
+      padding: 0;
+    }
+    .contact-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 14px;
+      background: var(--accent-soft);
+      border-radius: 10px;
+      font-size: 14px;
+    }
+    .contact-item .ic {
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--accent); color: #fff;
+      border-radius: 8px; font-size: 14px;
+      flex-shrink: 0;
+    }
+    .contact-item a { color: var(--accent); text-decoration: none; word-break: break-all; }
+    .contact-item a:hover { text-decoration: underline; }
+
+    /* CTA */
+    .cta {
+      margin-top: 30px;
+      text-align: center;
+      padding: 28px;
+      background: var(--card);
+      border: 2px dashed var(--accent);
+      border-radius: var(--radius);
+    }
+    .cta p { margin: 0 0 14px; font-weight: 600; }
+    .cta-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 700;
+      box-shadow: 0 6px 14px -4px rgba(37,99,235,0.5);
+      transition: transform 0.15s;
+    }
+    .cta-btn:hover { transform: translateY(-2px); }
+
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--sub);
+    }
+
+    @media (max-width: 768px) {
+      .grid { grid-template-columns: 1fr; }
+      .hero-grid { flex-direction: column; text-align: center; }
+      .meta-list { justify-content: center; }
+      .service-list { grid-template-columns: 1fr; }
+      .contact-list { grid-template-columns: 1fr; }
+      .hero { padding: 32px 22px; }
+      .hero-info h1 { font-size: 26px; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .card, .referral { box-shadow: none; }
+      .cta { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- HERO -->
+    <header class="hero">
+      <div class="hero-grid">
+        <div class="avatar">笹</div>
+        <div class="hero-info">
+          <div class="reading">SASAHARA AKIRO</div>
+          <h1>笹原 彰朗</h1>
+          <p class="tagline">お金とスマホの「やってみたい！」を叶える、地域密着のデジタル伴走者</p>
+          <div class="meta-list">
+            <span class="pill">OFFICE PLATA / ささエール</span>
+            <span class="pill">LINEコンサルタント / DX支援</span>
+            <span class="pill">鹿児島・宮崎中心</span>
+            <span class="pill">BNI：Big Forests Chapter</span>
+          </div>
+        </div>
+      </div>
+      <div class="hook">
+        <span class="hook-label">MEMORY HOOK</span>
+        「LINEのこと、AIのこと、よく分からない」<br>
+        その"分からない"を、笑顔で"できた！"に変えるのが、私の仕事です。
+      </div>
+    </header>
+
+    <!-- ABOUT -->
+    <section class="card full">
+      <span class="tag">ABOUT ME</span>
+      <h2>はじめまして、笹原 彰朗です</h2>
+      <p class="lead">
+        鹿児島・宮崎を中心に、地域の中小企業・個人事業主の皆さまへ
+        <strong>LINE公式アカウントの構築・運用支援</strong>と
+        <strong>AIを活用した業務効率化</strong>のサポートを行っています。
+      </p>
+      <p>
+        「ITは難しい」「自分にはできない」——そう感じている方こそ、私のお客様です。
+        専門用語を一切使わず、お客様のペースに寄り添いながら、
+        「やってみたい！」を一緒にカタチにしていく <em>"伴走型"</em> のサポートが私のスタイルです。
+      </p>
+      <p style="color: var(--sub); font-size: 14px; margin-top: 16px;">
+        ＊「ささエール」は、地域の方々を応援したいという想いから生まれた屋号です。
+      </p>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="card full">
+      <span class="tag">SERVICES</span>
+      <h2>提供しているサービス</h2>
+      <ul class="service-list">
+        <li class="service">
+          <div class="service-icon">💬</div>
+          <div class="service-title">LINE公式アカウント構築</div>
+          <div class="service-desc">店舗・サロン・士業の集客導線をLINEで一気通貫に。リッチメニュー・自動応答まで設計します。</div>
+        </li>
+        <li class="service">
+          <div class="service-icon">⚙️</div>
+          <div class="service-title">Lステップ設計</div>
+          <div class="service-desc">配信シナリオ・タグ管理・予約導線を最適化。"反応が取れる"運用設計を伴走サポート。</div>
+        </li>
+        <li class="service">
+          <div class="service-icon">🤖</div>
+          <div class="service-title">AI業務自動化</div>
+          <div class="service-desc">問い合わせ対応・資料作成・SNS運用などをAIで効率化。"人にしかできない仕事"に集中できる環境へ。</div>
+        </li>
+        <li class="service">
+          <div class="service-icon">📱</div>
+          <div class="service-title">スマホ・IT個別レッスン</div>
+          <div class="service-desc">「今さら聞けない」を解決する個別サポート。シニア世代・初心者の方にも丁寧に。</div>
+        </li>
+        <li class="service">
+          <div class="service-icon">🏢</div>
+          <div class="service-title">中小企業DX支援</div>
+          <div class="service-desc">小さな会社のための"等身大のDX"を提案。商工会・地域団体での講師実績も多数。</div>
+        </li>
+        <li class="service">
+          <div class="service-icon">📈</div>
+          <div class="service-title">運用代行・継続サポート</div>
+          <div class="service-desc">作って終わりにしない月次の運用サポート。"続けられる仕組み"を一緒に作ります。</div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- WHY ME -->
+    <div class="grid">
+      <section class="card">
+        <span class="tag">STRENGTHS</span>
+        <h2>選ばれる3つの理由</h2>
+        <ul>
+          <li><strong>翻訳力</strong> — 専門用語を使わず、相手の言葉で説明します。</li>
+          <li><strong>伴走力</strong> — 作って終わりではなく、運用が回るまで一緒に走ります。</li>
+          <li><strong>地域密着</strong> — 鹿児島・宮崎の商習慣・お客様像を理解した上で提案します。</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <span class="tag">VALUES</span>
+        <h2>大切にしていること</h2>
+        <ul>
+          <li>お客様を主役に。私は黒子に徹します。</li>
+          <li>「できなかった」を「できた！」に変える瞬間を、一緒に喜ぶ。</li>
+          <li>小さな会社・お店の挑戦を、テクノロジーで後押しする。</li>
+          <li>地域の経済が回る循環を、IT支援を通して作る。</li>
+        </ul>
+      </section>
+    </div>
+
+    <!-- REFERRAL -->
+    <section class="referral full" style="margin-top: 20px;">
+      <span class="tag">IDEAL REFERRALS</span>
+      <h2>こんな方をご紹介ください</h2>
+      <ul>
+        <li><strong>LINE公式アカウントを始めたい</strong>と思っている経営者・店舗オーナーさま</li>
+        <li><strong>問い合わせ対応に追われている</strong>店舗・サロン・士業の方</li>
+        <li><strong>AIを業務に取り入れたい</strong>けど何から手を付けていいか分からない経営者さま</li>
+        <li><strong>スタッフのITスキルを上げたい</strong>と考えている中小企業の経営者・人事担当者さま</li>
+        <li><strong>商工会・地域団体・経営者勉強会</strong>などで講師を探している方</li>
+        <li>鹿児島・宮崎エリアで <strong>「DXって何？」と感じている</strong>会社の担当者さま</li>
+      </ul>
+      <div class="hint">
+        💡 <strong>こんな会話が出たら、ぜひ私の名前を出してください。</strong><br>
+        「LINEを始めたいんだけど…」「問い合わせ対応が大変で…」「AIってどう使えばいいの？」
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="card full">
+      <span class="tag">TIMELINE</span>
+      <h2>これまでの歩み</h2>
+      <div class="timeline">
+        <div class="time-item">
+          <div class="time-year">創業期</div>
+          <div class="time-text">地域の中小企業・個人事業主向けにIT支援をスタート。</div>
+        </div>
+        <div class="time-item">
+          <div class="time-year">事業拡大期</div>
+          <div class="time-text">LINE公式アカウント・Lステップを軸とした運用支援に特化。鹿児島・宮崎で実績を積み重ねる。</div>
+        </div>
+        <div class="time-item">
+          <div class="time-year">現在</div>
+          <div class="time-text">LINE × AI活用支援を主軸に、地域DXパートナーとして活動。BNI Big Forests Chapter にて地域経営者と共に成長中。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="card full">
+      <span class="tag">CONTACT</span>
+      <h2>お問い合わせ・つながり</h2>
+      <ul class="contact-list">
+        <li class="contact-item">
+          <div class="ic">🏢</div>
+          <div>
+            <div style="font-weight:700;">屋号</div>
+            <div style="color: var(--sub); font-size: 13px;">OFFICE PLATA / ささエール</div>
+          </div>
+        </li>
+        <li class="contact-item">
+          <div class="ic">📍</div>
+          <div>
+            <div style="font-weight:700;">活動エリア</div>
+            <div style="color: var(--sub); font-size: 13px;">鹿児島県・宮崎県中心（オンライン全国対応）</div>
+          </div>
+        </li>
+        <li class="contact-item">
+          <div class="ic">🤝</div>
+          <div>
+            <div style="font-weight:700;">所属チャプター</div>
+            <div style="color: var(--sub); font-size: 13px;">BNI Big Forests Chapter</div>
+          </div>
+        </li>
+        <li class="contact-item">
+          <div class="ic">💼</div>
+          <div>
+            <div style="font-weight:700;">役割</div>
+            <div style="color: var(--sub); font-size: 13px;">LINEコンサルタント / DX支援</div>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- CTA -->
+    <div class="cta">
+      <p>1to1ミーティングをご希望の方は、こちらの詳細プロフィールもご覧ください 👇</p>
+      <a href="./index.html" class="cta-btn">BNI 1to1シート（GAINS）を見る</a>
+    </div>
+
+    <footer>
+      © OFFICE PLATA / 笹原 彰朗 ｜ BNI Big Forests Chapter
+    </footer>
+
+  </div>
+</body>
+</html>
